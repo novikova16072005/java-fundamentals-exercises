@@ -27,7 +27,7 @@ public class CrazyLambdas {
      * @return a string supplier
      */
     public static Supplier<String> helloSupplier() {
-        throw new ExerciseNotCompletedException();
+        return () -> "Hello";
     }
 
     /**
@@ -36,7 +36,7 @@ public class CrazyLambdas {
      * @return a string predicate
      */
     public static Predicate<String> isEmptyPredicate() {
-        throw new ExerciseNotCompletedException();
+        return String::isEmpty;
     }
 
     /**
@@ -46,7 +46,7 @@ public class CrazyLambdas {
      * @return function that repeats Strings
      */
     public static BiFunction<String, Integer, String> stringMultiplier() {
-        throw new ExerciseNotCompletedException();
+        return String::repeat;
     }
 
     /**
@@ -56,7 +56,7 @@ public class CrazyLambdas {
      * @return function that converts adds dollar sign
      */
     public static Function<BigDecimal, String> toDollarStringFunction() {
-        throw new ExerciseNotCompletedException();
+        return val -> "$" + val;
     }
 
     /**
@@ -68,7 +68,7 @@ public class CrazyLambdas {
      * @return a string predicate
      */
     public static Predicate<String> lengthInRangePredicate(int min, int max) {
-        throw new ExerciseNotCompletedException();
+        return str -> str.length() >= min && str.length() < max;
     }
 
     /**
@@ -77,8 +77,7 @@ public class CrazyLambdas {
      * @return int supplier
      */
     public static IntSupplier randomIntSupplier() {
-        throw new ExerciseNotCompletedException();
-    }
+        return () -> ThreadLocalRandom.current().nextInt();    }
 
 
     /**
