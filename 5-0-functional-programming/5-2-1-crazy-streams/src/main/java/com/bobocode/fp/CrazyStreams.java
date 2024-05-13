@@ -30,8 +30,8 @@ public class CrazyStreams {
      * @return account with max balance wrapped with optional
      */
     public Optional<Account> findRichestPerson() {
-        throw new ExerciseNotCompletedException();
-    }
+        return accounts.stream()
+                .max(comparing(Account::getBalance));    }
 
     /**
      * Returns a {@link List} of {@link Account} that have a birthday month equal to provided.
@@ -40,8 +40,9 @@ public class CrazyStreams {
      * @return a list of accounts
      */
     public List<Account> findAccountsByBirthdayMonth(Month birthdayMonth) {
-        throw new ExerciseNotCompletedException();
-    }
+        return accounts.stream()
+                .filter(a -> a.getBirthday().getMonth().equals(birthdayMonth))
+                .collect(toList());    }
 
     /**
      * Returns a map that separates all accounts into two lists - male and female. Map has two keys {@code true} indicates
@@ -50,8 +51,8 @@ public class CrazyStreams {
      * @return a map where key is true or false, and value is list of male, and female accounts
      */
     public Map<Boolean, List<Account>> partitionMaleAccounts() {
-        throw new ExerciseNotCompletedException();
-    }
+        return accounts.stream()
+                .collect(partitioningBy(a -> a.getSex().equals(Sex.MALE)));    }
 
     /**
      * Returns a {@link Map} that stores accounts grouped by its email domain. A map key is {@link String} which is an
@@ -60,7 +61,8 @@ public class CrazyStreams {
      * @return a map where key is an email domain and value is a list of all account with such email
      */
     public Map<String, List<Account>> groupAccountsByEmailDomain() {
-        throw new ExerciseNotCompletedException();
+        return accounts.stream()
+                .collect(groupingBy(a -> a.getEmail().split("@")[1]));
     }
 
     /**
@@ -69,7 +71,9 @@ public class CrazyStreams {
      * @return total number of letters of first and last names of all accounts
      */
     public int getNumOfLettersInFirstAndLastNames() {
-        throw new ExerciseNotCompletedException();
+        return accounts.stream()
+                .mapToInt(a -> a.getFirstName().length() + a.getLastName().length())
+                .sum();
     }
 
     /**
