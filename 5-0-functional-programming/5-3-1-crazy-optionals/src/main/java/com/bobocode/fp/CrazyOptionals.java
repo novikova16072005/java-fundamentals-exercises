@@ -37,8 +37,7 @@ public class CrazyOptionals {
      * @return optional object that holds text
      */
     public static Optional<String> optionalOfString(@Nullable String text) {
-        throw new ExerciseNotCompletedException();
-    }
+      return Optional.ofNullable(text);    }
 
     /**
      * Adds a provided amount of money to the balance of an optional account.
@@ -47,7 +46,8 @@ public class CrazyOptionals {
      * @param amount          money to deposit
      */
     public static void deposit(AccountProvider accountProvider, BigDecimal amount) {
-        throw new ExerciseNotCompletedException();
+        accountProvider.getAccount()
+                .ifPresent(account -> account.setBalance(account.getBalance().add(amount)));
     }
 
     /**
@@ -57,7 +57,7 @@ public class CrazyOptionals {
      * @return optional object that holds account
      */
     public static Optional<Account> optionalOfAccount(@Nonnull Account account) {
-        throw new ExerciseNotCompletedException();
+        return Optional.of(account);
     }
 
     /**
@@ -69,8 +69,8 @@ public class CrazyOptionals {
      * @return account from provider or defaultAccount
      */
     public static Account getAccount(AccountProvider accountProvider, Account defaultAccount) {
-        throw new ExerciseNotCompletedException();
-    }
+        return accountProvider.getAccount()
+                .orElse(defaultAccount);    }
 
     /**
      * Passes account to {@link AccountService#processAccount(Account)} when account is provided.
@@ -80,8 +80,8 @@ public class CrazyOptionals {
      * @param accountService
      */
     public static void processAccount(AccountProvider accountProvider, AccountService accountService) {
-        throw new ExerciseNotCompletedException();
-    }
+        accountProvider.getAccount()
+                .ifPresentOrElse(accountService::processAccount, accountService::processWithNoAccount);  }
 
     /**
      * Returns account provided by {@link AccountProvider}. If no account is provided it generates one using {@link Accounts}
@@ -91,8 +91,8 @@ public class CrazyOptionals {
      * @return provided or generated account
      */
     public static Account getOrGenerateAccount(AccountProvider accountProvider) {
-        throw new ExerciseNotCompletedException();
-    }
+        return accountProvider.getAccount()
+                .orElseGet(Accounts::generateAccount);  }
 
     /**
      * Retrieves a {@link BigDecimal} balance using null-safe mappings.
